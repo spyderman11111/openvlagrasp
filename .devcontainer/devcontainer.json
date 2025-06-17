@@ -1,0 +1,48 @@
+{
+  "name": "ws_ros2humble",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "imageName": "ros2humble-dev"
+  },
+  "runArgs": [
+    "--gpus=all",
+    "--net=host",
+    "--ipc=host",
+    "--pid=host",
+    "-e", "DISPLAY=${env:DISPLAY}",
+    "-e", "NVIDIA_VISIBLE_DEVICES=all",
+    "-e", "NVIDIA_DRIVER_CAPABILITIES=all",
+    "--name=ws_ros2humble"
+  ],
+  "workspaceFolder": "${localWorkspaceFolder}",
+  "workspaceMount": "source=${localWorkspaceFolder},target=${localWorkspaceFolder},type=bind",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "donjayamanne.python-extension-pack",
+        "ms-iot.vscode-ros",
+        "ms-python.python",
+        "eamodio.gitlens"
+      ]
+    }
+  },
+
+  "containerEnv": {
+    "ROS_DOMAIN_ID": "42",
+    "ROS_LOCALHOST_ONLY": "0",
+    "DISPLAY": "unix:0"
+  },
+
+  "mounts": [
+    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
+    "source=/dev/dri,target=/dev/dri,type=bind",
+    "source=/dev/bus/usb,target=/dev/bus/usb,type=bind"
+  ],
+
+  "postCreateCommand": "sudo apt update && sudo apt install -y python3-colcon-common-extensions"
+}
