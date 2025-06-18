@@ -6,10 +6,13 @@
     "imageName": "ros2humble-dev"
   },
   "runArgs": [
+    "--privileged",
     "--gpus=all",
     "--net=host",
     "--ipc=host",
     "--pid=host",
+    "-v", "/dev:/dev",
+    "-v", "/run/udev:/run/udev",
     "-e", "DISPLAY=${env:DISPLAY}",
     "-e", "NVIDIA_VISIBLE_DEVICES=all",
     "-e", "NVIDIA_DRIVER_CAPABILITIES=all",
